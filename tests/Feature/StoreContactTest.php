@@ -13,11 +13,10 @@ it('can store contact', function () {
             'city' => 'Yangon',
             'region' => "Myanmar",
             'country' => fake()->randomElement(["us", "ca"]),
-        ]);
-
+        ])
+        ->assertSessionHas('success', 'Contact created.');
 
     $contact = Contact::latest()->first();
-
     expect($contact)
         ->first_name
         ->not->toBe("Hlaing Mins")
