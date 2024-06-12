@@ -11,6 +11,9 @@
 |
 */
 
+use App\Models\Account;
+use App\Models\User;
+
 uses(
     Tests\TestCase::class,
     // Illuminate\Foundation\Testing\RefreshDatabase::class,
@@ -42,7 +45,11 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function login($user = null)
 {
-    // ..
+    $account = Account::create(['name' => 'Acme Corporation']);
+    $user = $user ?? User::factory()->create([
+        'account_id' => $account->id,
+    ]);
+    return test()->actingAs($user);
 }
