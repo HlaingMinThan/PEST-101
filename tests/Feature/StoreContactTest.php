@@ -2,12 +2,12 @@
 
 use App\Models\Contact;
 
-it('can store contact', function () {
+it('can store contact', function ($email) {
     login()
         ->post('/contacts', [
             'first_name' => 'Hlaing Min',
             'last_name' => 'Than',
-            'email' => 'hlaingminthan92@gmail.com',
+            'email' => $email,
             'phone' => '+09942377834',
             'address' => fake()->address,
             'city' => 'Yangon',
@@ -22,4 +22,4 @@ it('can store contact', function () {
         ->not->toBe("Hlaing Mins")
         ->phone
         ->toBePhoneNumber();
-});
+})->with('emails');
