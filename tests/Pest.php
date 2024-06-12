@@ -13,6 +13,7 @@
 
 use App\Models\Account;
 use App\Models\User;
+use PHPUnit\Framework\ExpectationFailedException;
 
 uses(
     Tests\TestCase::class,
@@ -30,8 +31,13 @@ uses(
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
+// custom expectation method
+expect()->extend('toBePhoneNumber', function () {
+    expect($this->value)->toStartWith("+");
+    //throw custom error in custom expectation method
+    if (strlen($this->value) < 6) {
+        throw new ExpectationFailedException('phone number should at least 6 chars');
+    }
 });
 
 /*
